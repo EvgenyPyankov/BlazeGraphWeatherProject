@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['line']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
+//        $('#loadingDiv')
+//                .hide()  // Hide it initially
+//                .ajaxStart(function() {
+//                    $(this).show();
+//                })
+//                .ajaxStop(function() {
+//                    $(this).hide();
+//                })
+//        ;
+
+        function drawChart() {
+           draw();
+        }
+        function draw(){
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify({"station": getUrlParameter('id')}),
+                dataType: "json",
+                url: "rest/controller/meanTempByYears",
+                success: function (json) {
+
+                alert("Got json "+json.toString())
+                    if (json.toString() == null)
+                        alert("No data found!")
+                   // var arr = [['Year', 'Temperature']];
+                    //arr.push(['2024', 200]);
+                    //arr.push(['1990', 233]);
+                    //arr.push(['1950', json.val]);
+
+
+
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('number', 'Year');
+                    data.addColumn('number', 'Temperature');
+
+                    for (var i in json){
+                        var year = json[i].year;
+                        var val = parseFloat(json[i].val);
+                        data.addRow([year, val]);
+                       // arr.push([year, val]);
+                    }
+
+                    var options = {
+                        chart: {
+                            title: 'Mean temperature in Sochi',
+                            subtitle: '2012',
+                        }
+                    };
+
+                    var chart = new google.charts.Line(document.getElementById('columnchart_material'));
+
+                    chart.draw(data, google.charts.Line.convertOptions(options));
+                },
+                beforeSend: function () { $("#loadingDiv").show(); },
+                complete: function () { $("#loadingDiv").hide(); }
+            });
+
+
+        }
+    </script>
+</head>
+<body>
+<div id="loadingDiv"></div>
+<div id="columnchart_material" style="width: 900px; height: 500px;"></div>
+</body>
+</html>

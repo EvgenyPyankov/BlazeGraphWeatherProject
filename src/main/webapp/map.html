@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<h3>Weather stations</h3>
+<div id="map"></div>
+<script>
+
+    function initMap() {
+
+//        var marker = new google.maps.Marker({
+//            position: uluru,
+//            map: map
+//        });
+//        var marker2 = new google.maps.Marker({
+//            position: {lat:53.93, lng:102.05},
+//            map:map
+//        });
+//        marker.addListener('click', function() {
+//            map.setZoom(8);
+//            map.setCenter(marker.getPosition());
+//            infoWindow.open(map,marker);
+//        });
+//        var label = '<div>Спасибо, за Ваш выбор!</div>';
+//        var infoWindow = new google.maps.InfoWindow({
+//            content: label
+//        });
+        getStations();
+        //var stations = getStations();
+        //alert("sts " + stations);
+       // alert(Object.keys(stations).length);
+
+    }
+
+    function getStations() {
+        $.ajax({
+            dataType: "json",
+            url: "rest/controller/stations",
+            success: function (stations) {
+                //var obj = JSON.parse(json);
+                //alert(Object.keys(stations).length);
+                // alert("here" + Object.keys(stations).length);
+                var uluru = {lat: 79.50, lng: 76.98};
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 6,
+                    center: uluru
+                });
+
+                for (var i in stations){
+                    var lat = parseFloat(stations[i].lat);
+                    var lng =  parseFloat(stations[i].lng);
+                    var id = stations[i].id;
+                    var pos = {lat: lat, lng: lng};
+                    var marker = new google.maps.Marker({
+                        position: pos,
+                        map: map,
+                        id:id
+                    });
+                    var label = '<div>'+stations[i].label+'</div>';
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: label
+                    });
+                    marker.addListener('click', function() {
+                        alert("ID = "+this.id)
+                        //map.setZoom(8);
+                        //map.setCenter(this.getPosition());
+                        //infoWindow.open(map,marker);
+                        window.location = '/BlazegraphWeather/graphicByYears.html?id=<' + this.id +">";
+                    });
+
+                }
+            }
+        });
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzL82aG_EmgsaY0fQTT7GQQRxyxSBiyxw&callback=initMap">
+</script>
+</body>
+</html>
