@@ -1,5 +1,6 @@
 package com.db;
 
+import com.constants.Queries;
 import org.openrdf.query.TupleQueryResult;
 
 public class QueryProcessing {

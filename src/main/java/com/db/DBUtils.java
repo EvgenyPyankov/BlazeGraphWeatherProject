@@ -2,7 +2,7 @@ package com.db;
 
 import com.bigdata.rdf.sail.webapp.client.RemoteRepository;
 import com.bigdata.rdf.sail.webapp.client.RemoteRepositoryManager;
-import com.controller.Constants;
+import com.constants.Constants;
 
 public class DBUtils {
     private static final String sparqlEndPoint = "http://192.168.159.128:9999/blazegraph";

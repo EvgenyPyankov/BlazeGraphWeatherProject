@@ -1,4 +1,4 @@
-package com.db;
+package com.constants;
 
 public class Queries {
 

@@ -1,5 +1,6 @@
 package com.db;
 
+import com.constants.Queries;
 import com.db.Entity.Station;
 import org.apache.log4j.Logger;
 import org.openrdf.query.BindingSet;
@@ -216,7 +217,8 @@ public class DBControllerImpl implements DBController {
                 "  ?s mto:st_measure %s.\n" +
                 "filter(?o >\"-100\"^^xsd:float).\n" +
                 "  }\n" +
-                "group by (year(?date) as ?year)";
+                "group by (year(?date) as ?year)" +
+                "order by (?year)";
         TupleQueryResult result = QueryProcessing.processQueryWithOwnPrefix(Queries.PREFIX, String.format(QUERY, station));
         log.debug("result = "+result.toString());
 
