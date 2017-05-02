@@ -4,6 +4,15 @@ public abstract class Measure {
     private double temperature;
     private double humidity;
 
+    public Measure(double temperature, double humidity) {
+        this.temperature = temperature;
+        this.humidity = humidity;
+    }
+
+    public Measure(double temperature) {
+        this.temperature = temperature;
+    }
+
     public double getTemperature() {
         return temperature;
     }

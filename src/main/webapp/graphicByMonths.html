@@ -44,6 +44,8 @@
                     }
 
                     var data = google.visualization.arrayToDataTable(arr);
+                    var formatNumer = new google.visualization.NumberFormat({pattern: 'decimal'});
+                    formatNumer.format(data, 1);
 
                     var options = {
                         chart: {
