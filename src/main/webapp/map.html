@@ -1,29 +1,23 @@
 <!DOCTYPE html>
-<html>
 <head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/utils.js"></script>
 </head>
 <body>
-<!--<h3>Weather stations</h3>-->
-<!--<div class="right_col">-->
-    <!--<p>Menu</p>-->
-    <!--<p>You choosed</p>-->
-    <!--<p>longitude</p>-->
-    <!--</div>-->
-<!--<div id="map" class="container">-->
-    <!--<div class="loadingDiv"></div>-->
-<!--</div>-->
+
 
 <div class="container">
-    <div class="header">Weather Change
+    <div class="header">
+        <h1 class="h1 page-header">WeatherChange.tk</h1>
     </div>
     <div class="navigation">
         <a id="globeDiv" href="map.html"></a>
     </div>
     <div class="menu">
+
     </div>
     <div class="content">
         <div id="map"></div>
@@ -32,6 +26,7 @@
     <div class="clear">
     </div>
     <div class="footer">
+        <a>SPARQL endpoint</a>
     </div>
 </div>
 
@@ -39,29 +34,16 @@
 
     function initMap() {
 
-//        var marker = new google.maps.Marker({
-//            position: uluru,
-//            map: map
-//        });
-//        var marker2 = new google.maps.Marker({
-//            position: {lat:53.93, lng:102.05},
-//            map:map
-//        });
-//        marker.addListener('click', function() {
-//            map.setZoom(8);
-//            map.setCenter(marker.getPosition());
-//            infoWindow.open(map,marker);
-//        });
-//        var label = '<div>Спасибо, за Ваш выбор!</div>';
-//        var infoWindow = new google.maps.InfoWindow({
-//            content: label
-//        });
         getStations();
-        //var stations = getStations();
-        //alert("sts " + stations);
-       // alert(Object.keys(stations).length);
+
 
     }
+
+
+    function func(id) {
+        window.location = '/BlazegraphWeather/graphicByYears.html?id=' + id;
+    }
+
 
     function getStations() {
         $.ajax({
@@ -71,31 +53,46 @@
                 //var obj = JSON.parse(json);
                 //alert(Object.keys(stations).length);
                 // alert("here" + Object.keys(stations).length);
-                var uluru = {lat: 79.50, lng: 76.98};
+                var uluru = {lat: 60, lng: 30};
                 var map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 6,
                     center: uluru
                 });
 
-                for (var i in stations){
+                for (var i in stations) {
                     var lat = parseFloat(stations[i].lat);
-                    var lng =  parseFloat(stations[i].lng);
+                    var lng = parseFloat(stations[i].lng);
+                    var alt = parseFloat(stations[i].alt);
                     var id = stations[i].id;
+                    var label = stations[i].label;
                     var pos = {lat: lat, lng: lng};
                     var marker = new google.maps.Marker({
                         position: pos,
                         map: map,
-                        id:id
+                        alt: alt,
+                        id: id,
+                        name: label,
+                        lat: lat,
+                        lng: lng
                     });
-                    var label = '<div>'+stations[i].label+'</div>';
+                    var label = '<div>' + stations[i].label + '</div>';
                     var infoWindow = new google.maps.InfoWindow({
                         content: label
                     });
-                    marker.addListener('click', function() {
+                    marker.addListener('click', function () {
                         //map.setZoom(8);
-                        //map.setCenter(this.getPosition());
+                        map.setCenter(this.getPosition());
                         //infoWindow.open(map,marker);
-                        window.location = '/BlazegraphWeather/graphicByYears.html?id=<' + this.id +">";
+                        var tmp = "\""+this.id+"\"";
+                        alert(tmp);
+                        $(".menu").empty();
+                        $(".menu").append("<p class='text-success text-center'>" + this.name + "</p>" +
+                                "<p class='text-info text-left'>Latitude: " + this.lat + "</p>" +
+                                "<p class='text-info text-left'>Longitude: " + this.lng + "</p>" +
+                                "<p class='text-info text-left'>Altitude: " + this.alt + "</p>" +
+                                "<p id='id' class='text-info text-left'>" + this.id + "</p>" +
+                                "<a id = 'lnk' class='text-right' onclick='func("+tmp+")'>more...</a>");
+                        //window.location = '/BlazegraphWeather/graphicByYears.html?id=<' + this.id +">";
                     });
 
                 }

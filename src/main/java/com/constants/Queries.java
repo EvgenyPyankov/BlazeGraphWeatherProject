@@ -49,7 +49,7 @@ public class Queries {
             "where{\n" +
             " ?s mto:tmean ?o.\n" +
             "  ?s mto:datem ?date.\n" +
-            "  ?s mto:st_measure %s.\n" +
+            "  ?s mto:st_measure <%s>.\n" +
             "filter(?o >\"-100\"^^xsd:float).\n" +
             "  }\n" +
             "group by (year(?date) as ?year)" +
