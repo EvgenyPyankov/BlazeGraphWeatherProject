@@ -4,10 +4,37 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/utils.js"></script>
 </head>
 <body>
-<h3>Weather stations</h3>
-<div id="map"></div>
+<!--<h3>Weather stations</h3>-->
+<!--<div class="right_col">-->
+    <!--<p>Menu</p>-->
+    <!--<p>You choosed</p>-->
+    <!--<p>longitude</p>-->
+    <!--</div>-->
+<!--<div id="map" class="container">-->
+    <!--<div class="loadingDiv"></div>-->
+<!--</div>-->
+
+<div class="container">
+    <div class="header">Weather Change
+    </div>
+    <div class="navigation">
+        <a id="globeDiv" href="map.html"></a>
+    </div>
+    <div class="menu">
+    </div>
+    <div class="content">
+        <div id="map"></div>
+        <div id="loadingDiv"></div>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="footer">
+    </div>
+</div>
+
 <script>
 
     function initMap() {
@@ -65,7 +92,6 @@
                         content: label
                     });
                     marker.addListener('click', function() {
-                        alert("ID = "+this.id)
                         //map.setZoom(8);
                         //map.setCenter(this.getPosition());
                         //infoWindow.open(map,marker);

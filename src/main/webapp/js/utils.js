@@ -12,3 +12,12 @@ function getUrlParameter(sParam) {
         }
     }
 };
+
+$.ajaxSetup({
+    beforeSend: function() {
+        $("#loadingDiv").show();
+    },
+    complete: function() {
+        $("#loadingDiv").hide();
+    }
+});
