@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DBController {
-   // final static Logger log = Logger.getLogger(DBController.class);
+    final static Logger log = Logger.getLogger(DBController.class);
 
     public List<Station> getAllStations() throws Exception {
         return DAOFactory.getStationDAO().getAllStations();
@@ -97,7 +97,6 @@ public class DBController {
     public HashMap<Integer, String> getMeanYearTempByMonths(int year) throws Exception {
 
 
-
         TupleQueryResult result = QueryProcessing.processQuery(String.format(Queries.GET_MEAN_TEMP_BY_MONTHS_QUERY, year));
 
 
@@ -140,8 +139,6 @@ public class DBController {
                 "Order by (?mon)";
 
 
-
-
         TupleQueryResult result = QueryProcessing.processQuery(String.format(QUERY, station, year));
 
 
@@ -160,7 +157,7 @@ public class DBController {
         return map;
     }
 
-    public List<YearMeasure> getMeanTempByYears(String station) throws Exception{
+    public List<YearMeasure> getMeanTempByYears(String station) throws Exception {
         return DAOFactory.getMeasureDAO().getMeanTempByYears(station);
     }
 

@@ -32,7 +32,7 @@ body {
 }
 
 #loadingDiv{
-    content:url(loading.gif);
+    content:url(../img/loading.gif);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -41,5 +41,26 @@ body {
     width: 100px;
     height: 100px;
 }
+
+a#globeDiv{
+    /*content:url(globe.png);*/
+    background:url(../img/globe.png);
+    display:block;
+    width: 64px;
+    height: 64px;
+    margin:0px;
+    padding:0px;
+}
+
+div.header{
+   min-width:600px;
+    max-width:4000px;
+    height:70px;
+}
+
+div.left_col { border-right:2px dashed #717dc9;
+    width:400px;
+    height:400px;
+    float:left}
 
 

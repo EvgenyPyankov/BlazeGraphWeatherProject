@@ -14,7 +14,7 @@ import java.util.*;
 
 @Path("/controller")
 public class Controller {
-    //final static Logger log = Logger.getLogger(Controller.class);
+    final static Logger log = Logger.getLogger(Controller.class);
     DBController dbController = new DBController();
     @GET
     @Path("/stations")
