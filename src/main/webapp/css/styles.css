@@ -56,7 +56,7 @@ body {
 
 
 .menu {
-    border: 1px black solid;
+    /*border: 1px black solid;*/
     #background: #333333;
     float: right;
     width: 200px;
@@ -69,7 +69,7 @@ body {
 }
 
 .content {
-    border: 1px black solid;
+    /*border: 1px black solid;*/
     #background: #d2d0d2;
     float: left;
 
@@ -90,7 +90,7 @@ body {
 
 
 #map, #datePickerContainer, #graphicContainer {
-    border: 1px black solid;
+    /*border: 1px black solid;*/
     height: 100%;
     width: 100%;
 }

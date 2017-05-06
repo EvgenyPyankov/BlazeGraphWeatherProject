@@ -9,23 +9,22 @@ $("#datePicker").submit(function (event) {
 function submitYear(val) {
 
     var year = $("#yearInput").val()
-    alert(year);
     event.preventDefault();
     drawYear(year);
 }
 
 function submitMonth(val) {
 
-    var month = $("#monthInput").val()
-    alert(month);
+    var date = $("#monthInput").val()
     event.preventDefault();
+    drawMonth(date);
 }
 
 function submitDate(val) {
 
-    var date = $("#dateInput").val()
-    alert(date);
+    var date = $("#dateInput").val();
     event.preventDefault();
+    drawDay(date)
 
 
 }
@@ -89,25 +88,64 @@ function processSelectEvent(val) {
 
 }
 
-function drawMonth(){
-
-}
-
-function drawDay(){
-
-}
-
-function drawDay(date){
+function drawMonth(date){
     $.ajax({
         type: "POST",
         data: JSON.stringify({
             "station": getUrlParameter('id'),
-            "date": date
+            "date":date,
+            "format": 'yyyy-MM'
+        }),
+        dataType: "json",
+        url: "rest/controller/meanTempByDaysOfMonth",
+        success: function (json) {
+
+
+            var arr = [['Day', 'Temperature']];
+
+
+            for (var i in json) {
+                var day = json[i].day;
+                var val = parseFloat(json[i].val);
+                arr.push([day, val]);
+            }
+
+            var data = google.visualization.arrayToDataTable(arr);
+            var formatNumer = new google.visualization.NumberFormat({pattern: 'decimal'});
+            formatNumer.format(data, 1);
+
+            var options = {
+                chart: {
+                    title: 'Mean temperature in '+getUrlParameter('id'),
+                    subtitle: date,
+                }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('graphicContainer'));
+
+            chart.draw(data, options);
+        }
+    });
+}
+
+
+function drawDay(date){
+    alert("before ")
+    $.ajax({
+        type: "POST",
+        data: JSON.stringify({
+            "station": getUrlParameter('id'),
+            "date": date,
+            "format": 'yyyy-MM-dd'
         }),
         dataType: "json",
         url: "rest/controller/dayMeasure",
         success: function (json) {
-            alert(json.mean)
+            alert("after");
+            // var date = json.date;
+            // var mean = json.mean;
+            // alert("helllo");
+            // $("#graphicContainer").append("<p>dfdfd"+mean+"</p>")
         }
     });
 }

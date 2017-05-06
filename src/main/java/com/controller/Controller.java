@@ -1,21 +1,24 @@
 package com.controller;
 
 import com.db.DBController;
-import com.db.Entity.DayMeasure;
+import com.db.Entity.Measure;
 import com.db.Entity.Station;
-import com.db.Entity.YearMeasure;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Path("/controller")
 public class Controller {
-    final static Logger log = Logger.getLogger(Controller.class);
+    final static Logger log = LoggerFactory.getLogger(Controller.class);
+    Calendar calendar = new GregorianCalendar();
     DBController dbController = new DBController();
     @GET
     @Path("/stations")
@@ -111,13 +114,14 @@ public class Controller {
     public String getMeanTempByYears(String body) throws Exception{
         JSONObject jsonStation = (JSONObject) JSONValue.parse(body);
         String station = (String) jsonStation.get("station");
-        List<YearMeasure> measures = dbController.getMeanTempByYears(station);
+        List<Measure> measures = dbController.getMeanTempByYears(station);
         JSONArray jsonArray = new JSONArray();
-        for(YearMeasure measure: measures){
+        for(Measure measure: measures){
             JSONObject jsonObject = new JSONObject();
-            int year = measure.getYear();
-            double temperature = measure.getTemperature();
-            jsonObject.put("year", year);
+            Date year = measure.getDate();
+            calendar.setTime(year);
+            double temperature = measure.getMean();
+            jsonObject.put("year", calendar.get(Calendar.YEAR));
             jsonObject.put("val", Double.toString(temperature));
             jsonArray.add(jsonObject);
         }
@@ -128,16 +132,49 @@ public class Controller {
     @Path("/dayMeasure")
     @Produces(MediaType.APPLICATION_JSON)
     public String getDayMeasure(String body) throws Exception{
+        log.debug("Got json: "+body);
         JSONObject json = (JSONObject) JSONValue.parse(body);
+        String format = (String)json.get("format");
         String station = (String) json.get("station");
-        log.debug("json date"+(String)json.get("date"));
         String dateStr = (String) json.get("date");
-        log.debug("date "+dateStr);
-        Date date = new Date(dateStr);
-        DayMeasure measure = dbController.getDayMeasure(station,date);
+        Date date = new SimpleDateFormat(format).parse(dateStr);
+        log.debug("Params: format = {}, station = {}, dateStr = {}, date = {}", new Object[]{format, station, dateStr, date.toString()});
+        Measure measure = dbController.getDayMeasure(station,date);
         JSONObject measureJson = new JSONObject();
-//        measureJson.put("date", measure.getTemperature());
-        measureJson.put("mean", measure.getTemperature());
+//        measureJson.put("date", measure.getMean());
+        measureJson.put("mean", measure.getMean());
+        measureJson.put("max", measure.getMax());
+        measureJson.put("min", measure.getMin());
+        measureJson.put("date", measure.getDate());
+        log.debug("Sending json object: {}", measureJson.toString());
         return measureJson.toString();
+    }
+
+    @POST
+    @Path("/meanTempByDaysOfMonth")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getMeanTempByDaysOfMonth(String body) throws Exception{
+        log.debug("Got json: "+body);
+        JSONObject json = (JSONObject) JSONValue.parse(body);
+        String format = (String)json.get("format");
+        String station = (String) json.get("station");
+        String dateStr = (String) json.get("date");
+        Date date = new SimpleDateFormat(format).parse(dateStr);
+        log.debug("Params: format = {}, station = {}, dateStr = {}, date = {}", new Object[]{format, station, dateStr, date.toString()});
+        List<Measure> measures = dbController.getMeanTempByDaysOfMonth(station,date);
+        JSONObject measureJson = new JSONObject();
+
+        JSONArray jsonArray = new JSONArray();
+        for(Measure measure: measures){
+            JSONObject jsonObject = new JSONObject();
+            Date year = measure.getDate();
+            calendar.setTime(year);
+            double temperature = measure.getMean();
+            jsonObject.put("day", calendar.get(Calendar.DAY_OF_MONTH));
+            jsonObject.put("val", Double.toString(temperature));
+            jsonArray.add(jsonObject);
+        }
+        log.debug("Sending json object: {}", jsonArray.toString());
+        return jsonArray.toString();
     }
 }

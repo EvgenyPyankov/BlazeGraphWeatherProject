@@ -64,4 +64,13 @@ public class Queries {
             "  ?s mto:st_measure <%s>.\n" +
             "  filter (?date = \"%s\"^^xsd:date).\n" +
             "}\n";
+
+    public static final String GET_MEAN_TEMP_BY_DAYS_OF_THE_MONTH="select ?date ?mean\n" +
+            "where{\n" +
+            "  ?measure mto:tmean ?mean.\n" +
+            "  ?measure mto:datem ?date.\n" +
+            "  ?measure mto:st_measure <%s>.\n" +
+            "  filter(?mean >\"-100\"^^xsd:float).\n" +
+            "  filter(year(?date) = %d && month(?date)= %d).\n" +
+            "}\n";
 }

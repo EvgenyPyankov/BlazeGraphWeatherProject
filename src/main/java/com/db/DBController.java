@@ -2,9 +2,8 @@ package com.db;
 
 import com.DAOFactory;
 import com.constants.Queries;
-import com.db.Entity.DayMeasure;
+import com.db.Entity.Measure;
 import com.db.Entity.Station;
-import com.db.Entity.YearMeasure;
 import org.apache.log4j.Logger;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.TupleQueryResult;
@@ -117,7 +116,7 @@ public class DBController {
         return map;
     }
 
-    public DayMeasure getDayMeasure(String station, Date date) throws Exception{
+    public Measure getDayMeasure(String station, Date date) throws Exception{
         return DAOFactory.getMeasureDAO().getDayMeasure(station, date);
     }
 
@@ -153,8 +152,12 @@ public class DBController {
         return map;
     }
 
-    public List<YearMeasure> getMeanTempByYears(String station) throws Exception {
+    public List<Measure> getMeanTempByYears(String station) throws Exception {
         return DAOFactory.getMeasureDAO().getMeanTempByYears(station);
+    }
+
+    public List<Measure> getMeanTempByDaysOfMonth(String station, Date date) throws Exception{
+        return DAOFactory.getMeasureDAO().getMeanTempByDaysOfMonth(station, date);
     }
 
 //    public HashMap<Integer, String> getMeanTempByYears(String station) throws Exception {
