@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.db.DBController;
+import com.db.Entity.DayMeasure;
 import com.db.Entity.Station;
 import com.db.Entity.YearMeasure;
 import org.apache.log4j.Logger;
@@ -64,6 +65,7 @@ public class Controller {
 
 
 
+
     @POST
     @Path("/meanYearTempByMonths")
     @Produces(MediaType.APPLICATION_JSON)
@@ -107,25 +109,6 @@ public class Controller {
     @Path("/meanTempByYears")
     @Produces(MediaType.APPLICATION_JSON)
     public String getMeanTempByYears(String body) throws Exception{
-//        log.debug("getMeanTempByYears start");
-//        JSONObject jsonStation = (JSONObject) JSONValue.parse(body);
-//        String station = (String) jsonStation.get("station");
-//        log.debug("station: "+station);
-//
-//
-//        HashMap<Integer, String> values = dbController.getMeanTempByYears(station);
-//
-//        JSONArray jsonArray = new JSONArray();
-//
-//        for (Map.Entry<Integer, String> entry : values.entrySet()) {
-//            JSONObject jsonObject = new JSONObject();
-//            jsonObject.put("year", entry.getKey());
-//            jsonObject.put("val", entry.getValue());
-//            jsonArray.add(jsonObject);
-//        }
-//        log.debug("Array: "+jsonArray.toString());
-//        return jsonArray.toString();
-
         JSONObject jsonStation = (JSONObject) JSONValue.parse(body);
         String station = (String) jsonStation.get("station");
         List<YearMeasure> measures = dbController.getMeanTempByYears(station);
@@ -139,5 +122,22 @@ public class Controller {
             jsonArray.add(jsonObject);
         }
         return jsonArray.toString();
+    }
+
+    @POST
+    @Path("/dayMeasure")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getDayMeasure(String body) throws Exception{
+        JSONObject json = (JSONObject) JSONValue.parse(body);
+        String station = (String) json.get("station");
+        log.debug("json date"+(String)json.get("date"));
+        String dateStr = (String) json.get("date");
+        log.debug("date "+dateStr);
+        Date date = new Date(dateStr);
+        DayMeasure measure = dbController.getDayMeasure(station,date);
+        JSONObject measureJson = new JSONObject();
+//        measureJson.put("date", measure.getTemperature());
+        measureJson.put("mean", measure.getTemperature());
+        return measureJson.toString();
     }
 }

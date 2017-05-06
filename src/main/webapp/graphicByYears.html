@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+<html lang="en">
 <head xmlns="http://www.w3.org/1999/html">
+    <meta>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -7,26 +9,29 @@
     <script src="js/utils.js"></script>
     <script src="js/graphicsByYears.js"></script>
 </head>
+
 <body>
-<!--<div class = "header">-->
-    <!--<a id="globeDiv" href="map.html"></a>-->
-<!--</div>-->
-<!--<div id="loadingDiv"></div>-->
-<!--<div id="graphicContainer" class="container">-->
-    <!--<div class="loadingDiv"></div>-->
-<!--</div>-->
-<!--<div class="leftCol"><p>Menu</p></div>-->
-
-
 <div class="container">
     <div class="header">
         <h1 class="h1 page-header">WeatherChange.tk</h1>
-</div>
+    </div>
     <div class="navigation">
         <a id="globeDiv" href="map.html"></a>
     </div>
     <div class="menu">
+        <select class="selectpicker" onchange="processSelectEvent(this.value)">
+            <option>All time</option>
+            <option>Year</option>
+            <option>Month</option>
+            <option>Day</option>
+        </select>
+
+
+        <div id="datePickerContainer">
+        </div>
     </div>
+
+
     <div class="content">
         <div id="graphicContainer"></div>
         <div id="loadingDiv"></div>

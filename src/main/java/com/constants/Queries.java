@@ -54,4 +54,14 @@ public class Queries {
             "  }\n" +
             "group by (year(?date) as ?year)" +
             "order by (?year)";
+
+    public static final String GET_DAY_MEASURE="select ?mean ?max ?min ?date\n" +
+            "where{\n" +
+            "  ?s mto:tmean ?mean.\n" +
+            "  ?s mto:tmax ?max.\n" +
+            "  ?s mto:tmin ?min.\n" +
+            "  ?s mto:datem ?date.\n" +
+            "  ?s mto:st_measure <%s>.\n" +
+            "  filter (?date = \"%s\"^^xsd:date).\n" +
+            "}\n";
 }

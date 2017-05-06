@@ -2,6 +2,7 @@ package com.db.DAOImpl;
 
 import com.constants.Queries;
 import com.db.DAO.MeasureDAO;
+import com.db.Entity.DayMeasure;
 import com.db.Entity.YearMeasure;
 import com.db.QueryProcessing;
 import org.openrdf.query.BindingSet;
@@ -9,6 +10,7 @@ import org.openrdf.query.TupleQueryResult;
 
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,5 +29,22 @@ public class MeasureDAOImpl implements MeasureDAO {
             }
 
         return measures;
+    }
+
+
+    public DayMeasure getDayMeasure(String station, Date date) throws Exception {
+        String dateStr=String.format("%1$tY-%1$tm-%1$td", date);
+        TupleQueryResult result = QueryProcessing.processQuery(String.format(Queries.GET_DAY_MEASURE, station, dateStr));
+
+        //List<YearMeasure> measures = new ArrayList<YearMeasure>();
+
+        BindingSet bs = result.next();
+        Double mean = Double.parseDouble(bs.getValue("mean").stringValue());
+        Double max =  Double.parseDouble(bs.getValue("max").stringValue());
+        Double min =  Double.parseDouble(bs.getValue("min").stringValue());
+        DayMeasure measure = new DayMeasure(mean, 0, date);
+
+
+        return measure;
     }
 }

@@ -9,4 +9,6 @@ public class DayMeasure extends Measure {
         super(temperature, humidity);
         this.day = day;
     }
+
+    public DayMeasure(){}
 }

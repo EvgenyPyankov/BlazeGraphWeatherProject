@@ -7,15 +7,7 @@
         google.charts.load('current', {'packages': ['bar']});
         google.charts.setOnLoadCallback(drawChart);
 
-        //        $('#loadingDiv')
-        //                .hide()  // Hide it initially
-        //                .ajaxStart(function() {
-        //                    $(this).show();
-        //                })
-        //                .ajaxStop(function() {
-        //                    $(this).hide();
-        //                })
-        //        ;
+
 
         function drawChart() {
             draw();
@@ -33,9 +25,7 @@
 
 
                     var arr = [['Month', 'Temperature']];
-                    //arr.push(['2024', 200]);
-                    //arr.push(['1990', 233]);
-                    //arr.push(['1950', json.val]);
+
 
                     for (var i in json) {
                         var month = json[i].month;
@@ -65,8 +55,6 @@
                     $("#loadingDiv").hide();
                 }
             });
-
-
         }
     </script>
 </head>

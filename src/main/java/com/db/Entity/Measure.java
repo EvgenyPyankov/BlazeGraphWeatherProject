@@ -9,6 +9,8 @@ public abstract class Measure {
         this.humidity = humidity;
     }
 
+    public Measure(){}
+
     public Measure(double temperature) {
         this.temperature = temperature;
     }
