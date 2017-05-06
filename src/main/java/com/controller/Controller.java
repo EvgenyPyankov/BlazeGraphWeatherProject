@@ -147,6 +147,7 @@ public class Controller {
         measureJson.put("min", measure.getMin());
         measureJson.put("date", measure.getDate());
         log.debug("Sending json object: {}", measureJson.toString());
+        measureJson.put("result", 200);
         return measureJson.toString();
     }
 

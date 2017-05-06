@@ -26,7 +26,7 @@
     <div class="clear">
     </div>
     <div class="footer">
-        <a href="http://weatherchange.tk:9999/blazegraph/">SPARQL endpoint</a>
+        <a class="btn btn-info" role="button"  href="http://weatherchange.tk:9999/blazegraph/">SPARQL endpoint</a>
     </div>
 </div>
 
@@ -40,8 +40,8 @@
     }
 
 
-    function func(id) {
-        window.location = '/BlazegraphWeather/graphicByYears.html?id=' + id;
+    function func(id, title) {
+        window.location = '/BlazegraphWeather/graphicByYears.html?id=' + id+'&title='+encodeURIComponent(title);
     }
 
 
@@ -81,13 +81,14 @@
                         map.setCenter(this.getPosition());
                         //infoWindow.open(map,marker);
                         var tmp = "\""+this.id+"\"";
+                        var tmp2 = "\""+this.name+"\"";
                         $(".menu").empty();
                         $(".menu").append("<p class='text-success text-center'>" + this.name + "</p>" +
                                 "<p class='text-info text-left'>Latitude: " + this.lat + "</p>" +
                                 "<p class='text-info text-left'>Longitude: " + this.lng + "</p>" +
                                 "<p class='text-info text-left'>Altitude: " + this.alt + "</p>" +
                                 "<p id='id' class='text-info text-left'>" + this.id + "</p>" +
-                                "<a id = 'lnk' class='text-right' onclick='func("+tmp+")'>more...</a>");
+                                "<a id = 'lnk' class='btn btn-info' role='button' onclick='func("+tmp+", "+tmp2+")'>more...</a>");
                         //window.location = '/BlazegraphWeather/graphicByYears.html?id=<' + this.id +">";
                     });
 
