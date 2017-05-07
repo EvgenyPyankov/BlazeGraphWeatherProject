@@ -14,25 +14,11 @@ public class HelloWorldService {
 
     @GET
     @Path("/{param}")
-    public Response getMsg(@PathParam("param") String msg) throws Exception{
-        final RemoteRepositoryManager repo = new RemoteRepositoryManager(
-                "http://localhost:9999/blazegraph", false /* useLBS */);
-        String buf = "hey ";
-        //SELECT * {?s ?p ?o} LIMIT 100
-        TupleQueryResult result = repo.getRepositoryForNamespace("test")
-                .prepareTupleQuery("SELECT * {?s ?p ?o} LIMIT 100")
-                .evaluate();
-        try {
-            while (result.hasNext()) {
-                BindingSet bs = result.next();
-                buf+=bs;
-            }
-        } finally {
-            result.close();
-        }
+    public Response getMsg(@PathParam("param") String msg) {
+
         String output = "Jersey say : " + msg;
 
-        return Response.status(200).entity(buf).build();
+        return Response.status(200).entity(output).build();
 
     }
 

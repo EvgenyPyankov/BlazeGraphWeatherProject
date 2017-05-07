@@ -12,6 +12,7 @@ import org.json.simple.JSONValue;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -22,9 +23,13 @@ public class Controller {
     DBController dbController = new DBController();
     @GET
     @Path("/stations")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getAllStations() throws Exception{
-       List<Station> stations = dbController.getAllStations();
+    //@Produces(MediaType.APPLICATION_JSON)
+    public Response getAllStations() throws Exception{
+
+        log.debug("getAllStations starts");
+            List<Station> stations = dbController.getAllStations();
+        log.debug("Got number of stations: "+stations.size());
+
 
 
         JSONArray jsonArray = new JSONArray();
@@ -32,7 +37,8 @@ public class Controller {
         {
             jsonArray.add(stationToJSON(test));
         }
-        return jsonArray.toString();
+
+        return Response.status(200).entity(jsonArray).build();
     }
 
     private JSONObject stationToJSON(Station station)
