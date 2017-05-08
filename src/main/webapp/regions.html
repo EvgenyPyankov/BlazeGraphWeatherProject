@@ -161,7 +161,6 @@
         function selectHandler() {
             var selectedItem = chart.getSelection();
             if (selectedItem){
-                alert(array[selectedItem[0].row+1][1]);
                 //TODO: title
                 window.location = '/BlazegraphWeather/graphicByYears.html?id=' + array[selectedItem[0].row+1][1] + '&title=' + ""+"&type=region";
 
