@@ -123,7 +123,7 @@ public class Controller {
     @Produces(MediaType.APPLICATION_JSON)
     public String getMeanTempByYears(String body) throws Exception{
         JSONObject jsonStation = (JSONObject) JSONValue.parse(body);
-        String station = (String) jsonStation.get("station");
+        String station = (String) jsonStation.get("id");
         List<Measure> measures = dbController.getMeanTempByYears(station);
         JSONArray jsonArray = new JSONArray();
         for(Measure measure: measures){
@@ -135,6 +135,29 @@ public class Controller {
             jsonObject.put("val", Double.toString(temperature));
             jsonArray.add(jsonObject);
         }
+        return jsonArray.toString();
+    }
+
+    @POST
+    @Path("/meanTempByYearsForRegion")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getMeanTempByYearsForRegion(String body) throws Exception{
+        JSONObject jsonStation = (JSONObject) JSONValue.parse(body);
+        String region = (String) jsonStation.get("id");
+        log.debug("Got region from json: "+region);
+        List<Measure> measures = dbController.getMeanTempByYearsForRegion(region);
+        log.debug("Measures size: "+measures.size());
+        JSONArray jsonArray = new JSONArray();
+        for(Measure measure: measures){
+            JSONObject jsonObject = new JSONObject();
+            Date year = measure.getDate();
+            calendar.setTime(year);
+            double temperature = measure.getMean();
+            jsonObject.put("year", calendar.get(Calendar.YEAR));
+            jsonObject.put("val", Double.toString(temperature));
+            jsonArray.add(jsonObject);
+        }
+        log.debug("Sending json: "+jsonArray.toString());
         return jsonArray.toString();
     }
 

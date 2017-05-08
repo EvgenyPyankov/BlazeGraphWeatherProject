@@ -1,9 +1,11 @@
 package com.db.DAOImpl;
 
+import com.DAOFactory;
 import com.constants.Queries;
 import com.controller.Controller;
 import com.db.DAO.MeasureDAO;
 import com.db.Entity.Measure;
+import com.db.Entity.Station;
 import com.db.QueryProcessing;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.TupleQueryResult;
@@ -18,19 +20,48 @@ public class MeasureDAOImpl implements MeasureDAO {
     Calendar calendar = new GregorianCalendar();
 
     public List<Measure> getMeanTempByYears(String station) throws Exception {
-        TupleQueryResult result = QueryProcessing.processQueryWithOwnPrefix(Queries.PREFIX, String.format(Queries.GET_MEAN_TEMP_BY_YEARS_QUERY, station));
+        TupleQueryResult result = QueryProcessing.processQueryWithOwnPrefix(Queries.PREFIX, String.format(Queries.GET_MEAN_TEMP_BY_YEARS_QUERY, "<"+station+">"));
 
         List<Measure> measures = new ArrayList<Measure>();
 
-            while (result.hasNext()) {
-                BindingSet bs = result.next();
-                Date year = new SimpleDateFormat("yyyy").parse(bs.getValue("year").stringValue());
-                double temperature = Double.parseDouble(bs.getValue("average").stringValue());
-                Measure measure = new Measure();
-                measure.setDate(year);
-                measure.setMean(temperature);
-                measures.add(measure);
-            }
+        while (result.hasNext()) {
+            BindingSet bs = result.next();
+            Date year = new SimpleDateFormat("yyyy").parse(bs.getValue("year").stringValue());
+            double temperature = Double.parseDouble(bs.getValue("average").stringValue());
+            Measure measure = new Measure();
+            measure.setDate(year);
+            measure.setMean(temperature);
+            measures.add(measure);
+        }
+
+        return measures;
+    }
+
+    public List<Measure> getMeanTempByYearsForRegion(String region) throws Exception {
+        log.debug("Region: "+region);
+        List<Station> stations = DAOFactory.getStationDAO().getStationsByRegion(region);
+
+        log.debug("Stations size: "+stations.size());
+        String stationsStr = "";
+        for (Station station:stations){
+            stationsStr+="<"+station.getId()+">";
+            stationsStr+="\n";
+        }
+        log.debug("Stations: "+stationsStr);
+        TupleQueryResult result = QueryProcessing.processQueryWithOwnPrefix(Queries.PREFIX, String.format(Queries.GET_MEAN_TEMP_BY_YEARS_QUERY, stationsStr));
+
+        List<Measure> measures = new ArrayList<Measure>();
+
+        while (result.hasNext()) {
+            BindingSet bs = result.next();
+            Date year = new SimpleDateFormat("yyyy").parse(bs.getValue("year").stringValue());
+            double temperature = Double.parseDouble(bs.getValue("average").stringValue());
+            Measure measure = new Measure();
+            measure.setDate(year);
+            measure.setMean(temperature);
+            measures.add(measure);
+            log.debug("Measure: "+measure.toString());
+        }
 
         return measures;
     }

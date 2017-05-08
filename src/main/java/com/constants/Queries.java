@@ -61,14 +61,27 @@ public class Queries {
             "GROUP BY (month(?date) AS ?mon)\n" +
             "Order by (?mon)";
 
-    public static final String GET_MEAN_TEMP_BY_YEARS_QUERY = "select ?year (avg(?o) as ?average)\n" +
+//    public static final String GET_MEAN_TEMP_BY_YEARS_QUERY = "select ?year (avg(?o) as ?average)\n" +
+//            "where{\n" +
+//            " ?s mto:tmean ?o.\n" +
+//            "  ?s mto:datem ?date.\n" +
+//            "  ?s mto:st_measure <%s>.\n" +
+//            "filter(?o >\"-100\"^^xsd:float).\n" +
+//            "  }\n" +
+//            "group by (year(?date) as ?year)" +
+//            "order by (?year)";
+
+    public static final String GET_MEAN_TEMP_BY_YEARS_QUERY="select ?year (avg(?o) as ?average)\n" +
             "where{\n" +
+            "  values ?value{\n" +
+            "  %s\n" +
+            "  }\n" +
             " ?s mto:tmean ?o.\n" +
             "  ?s mto:datem ?date.\n" +
-            "  ?s mto:st_measure <%s>.\n" +
+            "  ?s mto:st_measure ?value.\n" +
             "filter(?o >\"-100\"^^xsd:float).\n" +
             "  }\n" +
-            "group by (year(?date) as ?year)" +
+            "group by (year(?date) as ?year)"+
             "order by (?year)";
 
     public static final String GET_DAY_MEASURE="select ?mean ?max ?min ?date\n" +
@@ -89,4 +102,16 @@ public class Queries {
             "  filter(?mean >\"-100\"^^xsd:float).\n" +
             "  filter(year(?date) = %d && month(?date)= %d).\n" +
             "}\n";
+
+    //TODO: pay attention to federalSubject prefix and example.org
+    public static final String GET_STATIONS_BY_REGION = "select ?label ?lat ?lng ?alt ?station ?location ?region\n" +
+            "where{\n" +
+            "  ?station rdf:type ispra:MeasureStation.\n" +
+            "  ?station schema:location ?location.\n" +
+            "  ?location rdfs:label ?label.\n" +
+            "  ?location schema:geo [schema:latitude ?lat; schema:longitude ?lng; geo:alt ?alt].\n" +
+            "  ?location <http://example.org/meteo_ru_data/ontology/federalSubject> ?region.\n" +
+            "  filter (?region = <%s>).\n" +
+            "  filter (exists{?s mto:st_measure ?station.}).\n" +
+            "  }";
 }

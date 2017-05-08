@@ -156,6 +156,10 @@ public class DBController {
         return DAOFactory.getMeasureDAO().getMeanTempByYears(station);
     }
 
+    public List<Measure> getMeanTempByYearsForRegion(String region) throws Exception {
+        return DAOFactory.getMeasureDAO().getMeanTempByYearsForRegion(region);
+    }
+
     public List<Measure> getMeanTempByDaysOfMonth(String station, Date date) throws Exception{
         return DAOFactory.getMeasureDAO().getMeanTempByDaysOfMonth(station, date);
     }

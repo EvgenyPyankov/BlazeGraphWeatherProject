@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface StationDAO {
     List<Station> getAllStations() throws Exception;
+    List<Station> getStationsByRegion(String region) throws Exception;
 }

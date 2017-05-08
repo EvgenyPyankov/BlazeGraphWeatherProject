@@ -227,11 +227,17 @@ function drawChart() {
     drawAllTime();
 }
 function drawAllTime() {
+    var type = getUrlParameter('type');
+    var url;
+    if (type == "stantion")
+        url = "rest/controller/meanTempByYears";;
+    if (type == "region")
+        url = "rest/controller/meanTempByYearsForRegion";
     $.ajax({
         type: "POST",
-        data: JSON.stringify({"station": getUrlParameter('id')}),
+        data: JSON.stringify({"id": getUrlParameter('id')}),
         dataType: "json",
-        url: "rest/controller/meanTempByYears",
+        url: url,
         success: function (json) {
 
             if (json.toString() == '')
