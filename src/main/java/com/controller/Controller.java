@@ -33,10 +33,12 @@ public class Controller {
 
 
         JSONArray jsonArray = new JSONArray();
-        for (Station test : stations)
+        for (Station station : stations)
         {
-            jsonArray.add(stationToJSON(test));
+            log.debug("Station: "+station.toString());
+            jsonArray.add(stationToJSON(station));
         }
+        log.debug("JSON Array: "+jsonArray);
 
         return Response.status(200).entity(jsonArray).build();
     }
@@ -49,6 +51,8 @@ public class Controller {
         curStation.put("lat", station.getLat());
         curStation.put("alt", station.getAlt());
         curStation.put("id",station.getId());
+        curStation.put("regionLabel", station.getRegion().getLabel());
+        curStation.put("regionArea", station.getRegion().getArea());
         return curStation;
     }
 

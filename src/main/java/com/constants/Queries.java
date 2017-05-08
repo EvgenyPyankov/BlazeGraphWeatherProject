@@ -2,14 +2,29 @@ package com.constants;
 
 public class Queries {
 
-    public static final String GET_ALL_STATIONS_WITH_DATA_QUERY = "select ?label ?lat ?lng ?alt ?station\n" +
-            "where{\n" +
-            "  ?station rdf:type ispra:MeasureStation.\n" +
-            "  ?station schema:location ?location.\n" +
-            "  ?location rdfs:label ?label.\n" +
-            "  ?location schema:geo [schema:latitude ?lat; schema:longitude ?lng; geo:alt ?alt].\n" +
-            "  filter (exists{?s mto:st_measure ?station.}).\n" +
-            "  }\n";
+//    public static final String GET_ALL_STATIONS_WITH_DATA_QUERY = "select ?label ?lat ?lng ?alt ?station\n" +
+//            "where{\n" +
+//            "  ?station rdf:type ispra:MeasureStation.\n" +
+//            "  ?station schema:location ?location.\n" +
+//            "  ?location rdfs:label ?label.\n" +
+//            "  ?location schema:geo [schema:latitude ?lat; schema:longitude ?lng; geo:alt ?alt].\n" +
+//            "  filter (exists{?s mto:st_measure ?station.}).\n" +
+//            "  }\n";
+    public static final String GET_ALL_STATIONS_WITH_DATA_QUERY="select ?label ?lat ?lng ?alt ?station ?regionLabel ?area ?region\n" +
+        "where{\n" +
+        "  ?station rdf:type ispra:MeasureStation.\n" +
+        "  ?station schema:location ?location.\n" +
+        "  ?location rdfs:label ?label.\n" +
+        "  ?location schema:geo [schema:latitude ?lat; schema:longitude ?lng; geo:alt ?alt].\n" +
+        "  ?location <http://example.org/meteo_ru_data/ontology/federalSubject> ?region \n" +
+        "  filter (exists{?s mto:st_measure ?station.}).\n" +
+        "  service <http://dbpedia.org/sparql>\n" +
+        "    {\n" +
+        "    ?region rdfs:label ?regionLabel .\n" +
+        "    ?region dbp:areaKm ?area .\n" +
+        "    }\n" +
+        "    filter(lang(?regionLabel) = 'en')\n" +
+        " }";
     public static final String PREFIX = "prefix geo:   <http://www.w3.org/2003/01/geo/wgs84_pos#> \n" +
             "prefix dbo:   <http://dbpedia.org/ontology/> \n" +
             "prefix dbr:   <http://dbpedia.org/resource/> \n" +
@@ -21,7 +36,8 @@ public class Queries {
             "prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> \n" +
             "prefix schema:  <http://schema.org/> \n" +
             "prefix ispra: <http://dati.isprambiente.it/ontology/core#> \n" +
-            "prefix dcterms: <http://purl.org/dc/terms/> \n";
+            "prefix dcterms: <http://purl.org/dc/terms/> \n" +
+            "prefix dbp: <http://dbpedia.org/property/> \n";
 
     public static final String GET_MEAN_TEMP_BY_MONTHS_QUERY = "prefix geo:   <http://www.w3.org/2003/01/geo/wgs84_pos#> \n" +
             "prefix dbo:   <http://dbpedia.org/ontology/> \n" +

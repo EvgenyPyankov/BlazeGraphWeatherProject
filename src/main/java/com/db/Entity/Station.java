@@ -7,13 +7,15 @@ public class Station {
     private String lon;
     private String alt;
     private String id;
+    private Region region;
 
-    public Station(String label, String lat, String lng, String alt, String id) {
+    public Station(String label, String lat, String lng, String alt, String id, Region region) {
         Label = label;
         this.lat = lat;
         this.lon = lng;
         this.alt = alt;
         this.id = id;
+        this.region = region;
     }
 
     public String getLabel() {
@@ -34,5 +36,25 @@ public class Station {
 
     public String getId() {
         return id;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    @Override
+    public String toString() {
+        return "Station{" +
+                "Label='" + Label + '\'' +
+                ", lat='" + lat + '\'' +
+                ", lon='" + lon + '\'' +
+                ", alt='" + alt + '\'' +
+                ", id='" + id + '\'' +
+                ", region=" + region +
+                '}';
     }
 }

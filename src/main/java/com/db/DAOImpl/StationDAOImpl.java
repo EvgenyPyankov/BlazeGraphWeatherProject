@@ -2,6 +2,7 @@ package com.db.DAOImpl;
 
 import com.constants.Queries;
 import com.db.DAO.StationDAO;
+import com.db.Entity.Region;
 import com.db.Entity.Station;
 import com.db.QueryProcessing;
 import org.openrdf.query.BindingSet;
@@ -22,7 +23,11 @@ public class StationDAOImpl implements StationDAO{
             String alt = bs.getValue("alt").stringValue();
             String lat = bs.getValue("lat").stringValue();
             String id = bs.getValue("station").stringValue();
-            Station station = new Station(label, lat, lon, alt, id);
+            String regionId = bs.getValue("region").stringValue();
+            String regionLabel = bs.getValue("regionLabel").stringValue();
+            Double regionArea = Double.parseDouble(bs.getValue("area").stringValue());
+            Region region = new Region(regionId,regionLabel,regionArea);
+            Station station = new Station(label, lat, lon, alt, id, region);
             stations.add(station);
         }
         return stations;

@@ -26,7 +26,7 @@
     <div class="clear">
     </div>
     <div class="footer">
-        <a class="btn btn-info" role="button"  href="http://weatherchange.tk:9999/blazegraph/">SPARQL endpoint</a>
+        <a class="btn btn-info" role="button" href="http://weatherchange.tk:9999/blazegraph/">SPARQL endpoint</a>
     </div>
 </div>
 
@@ -41,7 +41,7 @@
 
 
     function func(id, title) {
-        window.location = '/BlazegraphWeather/graphicByYears.html?id=' + id+'&title='+encodeURIComponent(title);
+        window.location = '/BlazegraphWeather/graphicByYears.html?id=' + id + '&title=' + encodeURIComponent(title);
     }
 
 
@@ -62,6 +62,8 @@
                     var alt = parseFloat(stations[i].alt);
                     var id = stations[i].id;
                     var label = stations[i].label;
+                    var regionLabel = stations[i].regionLabel;
+                    var regionArea = stations[i].regionArea;
                     var pos = {lat: lat, lng: lng};
                     var marker = new google.maps.Marker({
                         position: pos,
@@ -70,7 +72,9 @@
                         id: id,
                         name: label,
                         lat: lat,
-                        lng: lng
+                        lng: lng,
+                        regionLabel: regionLabel,
+                        regionArea: regionArea
                     });
                     var label = '<div>' + stations[i].label + '</div>';
                     var infoWindow = new google.maps.InfoWindow({
@@ -80,15 +84,17 @@
                         //map.setZoom(8);
                         map.setCenter(this.getPosition());
                         //infoWindow.open(map,marker);
-                        var tmp = "\""+this.id+"\"";
-                        var tmp2 = "\""+this.name+"\"";
+                        var tmp = "\"" + this.id + "\"";
+                        var tmp2 = "\"" + this.name + "\"";
                         $(".menu").empty();
                         $(".menu").append("<p class='text-success text-center'>" + this.name + "</p>" +
                                 "<p class='text-info text-left'>Latitude: " + this.lat + "</p>" +
                                 "<p class='text-info text-left'>Longitude: " + this.lng + "</p>" +
                                 "<p class='text-info text-left'>Altitude: " + this.alt + "</p>" +
                                 "<p id='id' class='text-info text-left'>" + this.id + "</p>" +
-                                "<a id = 'lnk' class='btn btn-info' role='button' onclick='func("+tmp+", "+tmp2+")'>more...</a>");
+                        "<p class='text-info text-left'>Region: " + this.regionLabel + "</p>" +
+                        "<p class='text-info text-left'>Area: " + this.regionArea + "</p>"+
+                                "<a id = 'lnk' class='btn btn-info' role='button' onclick='func(" + tmp + ", " + tmp2 + ")'>more...</a>");
                         //window.location = '/BlazegraphWeather/graphicByYears.html?id=<' + this.id +">";
                     });
 
