@@ -3,25 +3,31 @@
 .btn-bottom {
     margin-bottom: 50px;
 }
+
 #loginForm, #regForm {
-    width:70%;
-    margin:0 auto;
+    width: 70%;
+    margin: 0 auto;
 }
+
 #signupBtn {
-    margin-top:20px;
+    margin-top: 20px;
 }
+
 #navTabs {
-    margin-top:100px;
+    margin-top: 100px;
 }
+
 #regtab input {
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
+
 #logtab input {
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
+
 #mainmenu {
-    margin-top:100px;
-    margin-bottom:50px;
+    margin-top: 100px;
+    margin-bottom: 50px;
 }
 
 body {
@@ -33,8 +39,8 @@ body {
 
 .container {
     background: #FFFFFF;
-    padding:0px;
-    margin:0px auto;
+    padding: 0px;
+    margin: 0px auto;
     /*margin: 30px auto;*/
     width: 900px;
     height: 640px;
@@ -52,18 +58,16 @@ body {
     height: 64px;
 }
 
-
-
 .menu {
     /*border: 1px black solid;*/
     #background: #333333;
     float: right;
     width: 200px;
     height: 400px;
-    padding-left:10px;
+    padding-left: 10px;
 }
 
-#id{
+#id {
     visibility: hidden;
 }
 
@@ -78,7 +82,7 @@ body {
 }
 
 .clear {
-    clear:both;
+    clear: both;
 }
 
 .footer {
@@ -87,14 +91,66 @@ body {
     width: 900px;
 }
 
-
 #map, #datePickerContainer, #graphicContainer {
     /*border: 1px black solid;*/
     height: 100%;
     width: 100%;
 }
 
-#errorMessage{
+.red {
+    background-color: #9999FF;
+}
+
+.green {
+    background-color:#66CC66;
+}
+
+.blue {
+    background-color: #6699FF;
+}
+
+.yellow {
+    background-color:#FFCC33;
+}
+
+.pink{
+    background-color:#FF6633;
+}
+
+.squareButton {
+    margin:10px;
+    border-radius: 20px;
+    width: 160px;
+    height: 150px;
+    /*background-color: #4cae4c;*/
+    vertical-align: middle;
+    display: block;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    float: left;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+.myFont {
+    color: white;
+    font-family: "Helvetica Neue";
+    font-size: 20px
+}
+
+#errorMessage {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -104,8 +160,8 @@ body {
     height: 20px;
 }
 
-#loadingDiv{
-    content:url(../img/loading.gif);
+#loadingDiv {
+    content: url(../img/loading.gif);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -116,18 +172,18 @@ body {
 }
 
 /*#graphicContainer{*/
-    /*width:100%;*/
-    /*height:100%;*/
+/*width:100%;*/
+/*height:100%;*/
 
 /*}*/
-a#globeDiv{
+a#globeDiv {
     /*content:url(globe.png);*/
-    background:url(../img/globe.png);
-    display:block;
+    background: url(../img/globe.png);
+    display: block;
     width: 64px;
     height: 64px;
-    margin:0px;
-    padding:0px;
+    margin: 0px;
+    padding: 0px;
 }
 
 /*div.header{*/

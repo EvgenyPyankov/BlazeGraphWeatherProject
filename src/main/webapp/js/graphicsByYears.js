@@ -230,7 +230,7 @@ function drawAllTime() {
     var type = getUrlParameter('type');
     var url;
     if (type == "stantion")
-        url = "rest/controller/meanTempByYears";;
+        url = "rest/controller/meanTempByYears";
     if (type == "region")
         url = "rest/controller/meanTempByYearsForRegion";
     $.ajax({
