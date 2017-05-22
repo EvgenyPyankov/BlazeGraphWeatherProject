@@ -4,16 +4,19 @@ import com.DAOFactory;
 import com.constants.Queries;
 import com.db.Entity.Measure;
 import com.db.Entity.Station;
-import org.apache.log4j.Logger;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.TupleQueryResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+//import org.apache.log4j.Logger;
+
 public class DBController {
-    final static Logger log = Logger.getLogger(DBController.class);
+    final static Logger log = LoggerFactory.getLogger(DBController.class);
 
     public List<Station> getAllStations() throws Exception {
         return DAOFactory.getStationDAO().getAllStations();
@@ -150,6 +153,48 @@ public class DBController {
             result.close();
         }
         return map;
+    }
+
+    private void validateYears(int[]years)throws Exception{
+        if (years == null) throw new RuntimeException("No input data");
+        if (years.length <4) throw new RuntimeException("To little arguments");
+        if ((years[0]> years[1]) || (years[2] > years[3])) throw new RuntimeException("Bad values");
+    }
+
+    public double[] getTempDelta(String id, int[]years) throws Exception{
+        validateYears(years);
+        int fromFrom = years[0];
+        int fromTo = years[1];
+        int toFrom = years[2];
+        int toTo = years[3];
+        double mean = 0;
+        int count = 0;
+        for (int year = fromFrom; year<=fromTo; year++){
+            double tmp = DAOFactory.getMeasureDAO().getMeanTempByYearForRegion(id, year);
+            mean+=tmp;
+            count++;
+        }
+        double from = mean / count;
+
+        mean = 0;
+        count = 0;
+        for (int year = toFrom; year<=toTo; year++){
+            double tmp = DAOFactory.getMeasureDAO().getMeanTempByYearForRegion(id, year);
+            mean+=tmp;
+            count++;
+        }
+        double to = mean / count;
+
+        double delta = to - from;
+
+        double[]values = new double[3];
+        values[0]=from;
+        values[1] = to;
+        values[2]= delta;
+
+        log.debug("From: {}, to: {}, delta: {}", new Object[]{from, to, delta});
+        return values;
+
     }
 
     public List<Measure> getMeanTempByYears(String station) throws Exception {

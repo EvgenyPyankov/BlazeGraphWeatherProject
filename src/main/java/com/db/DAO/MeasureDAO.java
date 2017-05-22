@@ -10,4 +10,5 @@ public interface MeasureDAO {
     List<Measure> getMeanTempByYearsForRegion(String region) throws Exception;
     Measure getDayMeasure(String station, Date date) throws Exception;
     List<Measure> getMeanTempByDaysOfMonth(String station, Date date) throws Exception;
+    double getMeanTempByYearForRegion(String region, int year) throws Exception;
 }

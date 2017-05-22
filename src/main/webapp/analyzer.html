@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="private">
+    <title>Analyzer</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/constants.js"></script>
+    <script src="js/analyzer.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="header">
+        <h1 class="h1 page-header">WeatherChange.tk</h1>
+    </div>
+    <div class="navigation">
+        <a id="globeDiv" href="index.html"></a>
+    </div>
+    <div class="menu">
+        <select class="selectpicker" id="regionPicker">
+            <option>Russia</option>
+            <option>RU-ARK</option>
+            <option>RU-KK</option>
+            <option>RU-KL</option>
+            <option>RU-SAK</option>
+            <option>RU-KO</option>
+            <option>RU-SAM</option>
+            <option>RU-CE</option>
+            <option>RU-SVE</option>
+            <option>RU-IRK</option>
+            <option>RU-ORE</option>
+            <option>RU-KC</option>
+            <option>RU-SAR</option>
+            <option>RU-KB</option>
+            <option>RU-YAN</option>
+            <option>RU-ORL</option>
+            <option>RU-MUR</option>
+            <option>RU-CU</option>
+            <option>RU-TOM</option>
+            <option>RU-KEM</option>
+            <option>RU-MAG</option>
+            <option>RU-KIR</option>
+            <option>RU-IVA</option>
+            <option>RU-KR</option>
+            <option>RU-OMS</option>
+            <option>RU-SMO</option>
+            <option>RU-VGG</option>
+            <option>RU-ROS</option>
+            <option>RU-TA</option>
+            <option>RU-KAM</option>
+            <option>RU-NGR</option>
+            <option>RU-VOR</option>
+            <option>RU-PNZ</option>
+            <option>RU-BA</option>
+            <option>RU-ULY</option>
+            <option>RU-PSK</option>
+            <option>RU-AMU</option>
+            <option>RU-NVS</option>
+            <option>RU-SA</option>
+            <option>RU-KHM</option>
+            <option>RU-CHU</option>
+            <option>RU-SE</option>
+            <option>RU-BU</option>
+            <option>RU-KYA</option>
+            <option>RU-KLU</option>
+            <option>RU-ZAB</option>
+            <option>RU-NIZ</option>
+            <option>RU-CHE</option>
+            <option>RU-STA</option>
+            <option>RU-TAM</option>
+            <option>RU-MO</option>
+            <option>RU-AD</option>
+            <option>RU-ME</option>
+            <option>RU-TVE</option>
+            <option>RU-KHA</option>
+            <option>RU-PRI</option>
+            <option>RU-KDA</option>
+            <option>RU-ALT</option>
+            <option>RU-BRY</option>
+            <option>RU-TUL</option>
+            <option>RU-KOS</option>
+            <option>RU-TYU</option>
+            <option>RU-MOS</option>
+            <option>RU-KGN</option>
+            <option>RU-LIP</option>
+            <option>RU-LEN</option>
+            <option>RU-NEN</option>
+            <option>RU-AL</option>
+            <option>RU-RYA</option>
+            <option>RU-TY</option>
+            <option>RU-AST</option>
+            <option>RU-DA</option>
+            <option>RU-KGD</option>
+            <option>RU-BEL</option>
+            <option>RU-YEV</option>
+            <option>RU-YAR</option>
+            <option>RU-VLA</option>
+            <option>RU-KRS</option>
+            <option>RU-UD</option>
+            <option>RU-VLG</option>
+            <option>RU-ARK</option>
+            <option>RU-KK</option>
+            <option>RU-KL</option>
+            <option>RU-SAK</option>
+            <option>RU-KO</option>
+            <option>RU-SAM</option>
+            <option>RU-CE</option>
+            <option>RU-SVE</option>
+            <option>RU-IRK</option>
+            <option>RU-ORE</option>
+            <option>RU-KC</option>
+            <option>RU-SAR</option>
+            <option>RU-KB</option>
+            <option>RU-YAN</option>
+            <option>RU-ORL</option>
+            <option>RU-MUR</option>
+            <option>RU-CU</option>
+            <option>RU-TOM</option>
+            <option>RU-KEM</option>
+            <option>RU-MAG</option>
+            <option>RU-KIR</option>
+            <option>RU-IVA</option>
+            <option>RU-KR</option>
+            <option>RU-OMS</option>
+            <option>RU-SMO</option>
+            <option>RU-VGG</option>
+            <option>RU-ROS</option>
+            <option>RU-TA</option>
+            <option>RU-KAM</option>
+            <option>RU-NGR</option>
+            <option>RU-VOR</option>
+            <option>RU-PNZ</option>
+            <option>RU-BA</option>
+            <option>RU-ULY</option>
+            <option>RU-PSK</option>
+            <option>RU-AMU</option>
+            <option>RU-NVS</option>
+            <option>RU-SA</option>
+            <option>RU-KHM</option>
+            <option>RU-CHU</option>
+            <option>RU-SE</option>
+            <option>RU-BU</option>
+            <option>RU-KYA</option>
+            <option>RU-KLU</option>
+            <option>RU-ZAB</option>
+            <option>RU-NIZ</option>
+            <option>RU-CHE</option>
+            <option>RU-STA</option>
+            <option>RU-TAM</option>
+            <option>RU-MO</option>
+            <option>RU-AD</option>
+            <option>RU-ME</option>
+            <option>RU-TVE</option>
+            <option>RU-KHA</option>
+            <option>RU-PRI</option>
+            <option>RU-KDA</option>
+            <option>RU-ALT</option>
+            <option>RU-BRY</option>
+            <option>RU-TUL</option>
+            <option>RU-KOS</option>
+            <option>RU-TYU</option>
+            <option>RU-MOS</option>
+            <option>RU-KGN</option>
+            <option>RU-LIP</option>
+            <option>RU-LEN</option>
+            <option>RU-NEN</option>
+            <option>RU-AL</option>
+            <option>RU-RYA</option>
+            <option>RU-TY</option>
+            <option>RU-AST</option>
+            <option>RU-DA</option>
+            <option>RU-KGD</option>
+            <option>RU-BEL</option>
+            <option>RU-YEV</option>
+            <option>RU-YAR</option>
+            <option>RU-VLA</option>
+            <option>RU-KRS</option>
+            <option>RU-UD</option>
+            <option>RU-VLG</option>
+        </select>
+
+    </div>
+    <div class="content">
+       <h2>Analysis</h2>
+        <h2>From:</h2>
+        <form id='yearPicker'>
+            Choose period from:
+            </br>
+            <input type='number' id='fromFrom' min='1880' max='2016'>
+            -
+            <input type='number' id='fromTo' min='1880' max='2016'>
+            </br>
+        <h2>To:</h2>
+        </br>
+            Choose period to:
+            </br>
+        <input type='number' id='toFrom' min='1880' max='2016'>
+        -
+        <input type='number' id='toTo' min='1880' max='2016'>
+        </br>
+
+        </form>
+        <button onclick='submit()'>Submit</button>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="footer">
+    </div>
+</div>
+
+</body>
+</html>
+</body>
+</html>

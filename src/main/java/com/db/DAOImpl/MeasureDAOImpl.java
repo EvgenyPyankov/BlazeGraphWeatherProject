@@ -1,12 +1,15 @@
 package com.db.DAOImpl;
 
 import com.DAOFactory;
+import com.bigdata.bop.Constant;
+import com.constants.Constants;
 import com.constants.Queries;
 import com.controller.Controller;
 import com.db.DAO.MeasureDAO;
 import com.db.Entity.Measure;
 import com.db.Entity.Station;
 import com.db.QueryProcessing;
+import org.apache.http.impl.client.TunnelRefusedException;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.TupleQueryResult;
 import org.slf4j.Logger;
@@ -35,6 +38,30 @@ public class MeasureDAOImpl implements MeasureDAO {
         }
 
         return measures;
+    }
+
+    public double getMeanTempByYearForRegion(String region, int year) throws Exception {
+        log.debug("Region: "+region);
+        List<Station> stations = DAOFactory.getStationDAO().getStationsByRegion(region);
+
+        log.debug("Stations size: "+stations.size());
+        String stationsStr = "";
+        for (Station station:stations){
+            stationsStr+="<"+station.getId()+">";
+            stationsStr+="\n";
+        }
+        log.debug("Stations: "+stationsStr);
+        TupleQueryResult result = QueryProcessing.processQuery(String.format(Queries.GET_MEAN_TEMP_BY_YEAR_QUERY,stationsStr, year));
+
+        double temperature = -9999;
+        if (result.hasNext()){
+            BindingSet bs = result.next();
+            temperature = Double.parseDouble(bs.getValue("average").stringValue());
+        }
+       log.debug("Temperature = "+temperature);
+        if (temperature <-1000)
+            throw new RuntimeException("No data found!");
+        return temperature;
     }
 
     public List<Measure> getMeanTempByYearsForRegion(String region) throws Exception {

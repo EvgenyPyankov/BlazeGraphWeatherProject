@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+
 @Path("/controller")
 public class Controller {
     final static Logger log = LoggerFactory.getLogger(Controller.class);
@@ -116,6 +117,58 @@ public class Controller {
 
         return jsonArray.toString();
 
+    }
+
+    //TODO:error codes
+    @POST
+    @Path("/tempDelta")
+   // @Produces(MediaType.APPLICATION_JSON)
+    public Response calculateTempDelta(String body){
+        JSONObject json = (JSONObject) JSONValue.parse(body);
+        try {
+            String id = (String) json.get("id");
+            int fromFrom = Integer.parseInt((String)json.get("fromFrom"));
+            int fromTo = Integer.parseInt((String)json.get("fromTo"));
+            int toFrom = Integer.parseInt((String)json.get("toFrom"));
+            int toTo = Integer.parseInt((String)json.get("toTo"));
+
+
+            log.debug("id: {}, fromFrom: {}, fromTo: {}, toFrom: {}, toTo: {}", new Object[]{id, fromFrom, fromTo, toFrom, toTo});
+
+            int[] years = new int[4];
+            years[0] = fromFrom;
+            years[1] = fromTo;
+            years[2] = toFrom;
+            years[3] = toTo;
+
+
+            double[] values = null;
+            JSONObject jsonObject = new JSONObject();
+
+        try {
+            values = dbController.getTempDelta(id, years);
+        }
+        catch (Exception e){
+            log.debug("Exception: "+e);
+            return Response.status(500).build();
+        }
+
+
+        jsonObject.put("from", values[0]);
+        jsonObject.put("to", values[1]);
+        jsonObject.put("avg", values[2]);
+
+
+
+        return Response.status(200).entity(jsonObject).build();
+        //return Response.status(404).build();
+        //return Response.status(200).entity(jsonArray).build();
+
+        }
+        catch (Exception e){
+            log.debug("Exception e: "+e);
+        }
+        return Response.status(200).build();
     }
 
     @POST

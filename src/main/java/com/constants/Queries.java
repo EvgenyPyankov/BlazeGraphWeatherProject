@@ -132,6 +132,37 @@ public class Queries {
             "group by (year(?date) as ?year)" +
             "order by (?year)";
 
+//    select (avg(?mean) as ?average)
+//    where{
+//        VALUES ?value
+//        {
+//      <http://example.org/meteo_ru_data/resource/stat_22768>
+//        mtr:stat_22837
+//            mtr:stat_22550
+//
+//        }
+//  ?measure mto:tmean ?mean.
+//                ?measure mto:datem ?date.
+//                ?measure mto:st_measure ?value.
+//                filter(?mean >"-100"^^xsd:float).
+//        filter(year(?date) = 1999).
+//    }
+//
+
+    public static final String GET_MEAN_TEMP_BY_YEAR_QUERY= "select (avg(?mean) as ?average)\n" +
+            "where{\n" +
+            "   VALUES ?value\n" +
+            "    {\n" +
+            "      %s\n" +
+            "       \n" +
+            "    }\n" +
+            "  ?measure mto:tmean ?mean.\n" +
+            "  ?measure mto:datem ?date.\n" +
+            "  ?measure mto:st_measure ?value.\n" +
+            "  filter(?mean >\"-100\"^^xsd:float).\n" +
+            "  filter(year(?date) = %d).\n" +
+            "}";
+
     public static final String GET_DAY_MEASURE = "select ?mean ?max ?min ?date\n" +
             "where{\n" +
             "  ?s mto:tmean ?mean.\n" +

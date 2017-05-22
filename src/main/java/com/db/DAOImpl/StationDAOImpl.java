@@ -29,7 +29,7 @@ public class StationDAOImpl implements StationDAO{
     public List<Station> getStationsByRegion(String region) throws Exception {
         log.debug("Region: "+region);
         TupleQueryResult result = QueryProcessing.processQuery(String.format(Queries.GET_STATIONS_BY_REGION, region));
-        if (!result.hasNext()) throw new RuntimeException("Query return no rows! ");
+        if (!result.hasNext()) throw new RuntimeException("Query returned no rows! ");
         log.debug("Query: "+String.format(Queries.GET_STATIONS_BY_REGION, region));
         List<Station> stations = toList(result);
 
