@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heat map</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="header">
+        <h1 class="h1 page-header">WeatherChange.tk</h1>
+    </div>
+    <div class="navigation">
+        <a id="globeDiv" href="index.html"></a>
+    </div>
+    <div class="menu">
+
+    </div>
+    <div class="content">
+        <div id="map"></div>
+        <!--<div id="loadingDiv"></div>-->
+    </div>
+    <div class="clear">
+    </div>
+    <div class="footer">
+        <a class="btn btn-info" role="button" href="http://weatherchange.tk:9999/blazegraph/">SPARQL endpoint</a>
+    </div>
+</div>
+
+<script>
+    //    function getStations() {
+    //        $.ajax({
+    //            dataType: "json",
+    //            url: "rest/controller/stations",
+    //            success: function (stations) {
+    //
+    //            }
+    //        });
+    //    }
+
+    google.charts.load('upcoming', {'packages':['geochart']});
+    google.charts.setOnLoadCallback(drawRegionsMap);
+
+    function drawRegionsMap() {
+        var array = [
+            ['Provinces', 'Mean temperature'],
+            //['RU-KO', 200],
+            // [{v: 'RU-KAM', f: 'HCM'}, 300]
+            ['RU-ARK', 1.1703191],
+            ['RU-KL', 12.719999],
+            ['RU-SAK', 0.8213725],
+            ['RU-KO', -1.4960566],
+            ['RU-SAM', 6.8944263],
+            ['RU-SVE', 1.4253877],
+            ['RU-IRK', -3.9802697],
+            ['RU-ORE', 6.090821],
+            ['RU-KC', 7.210223],
+            ['RU-SAR', 7.551917],
+            ['RU-SA', -8.5],
+            ['RU-YAN', -7.652857],
+            ['RU-MUR', -0.43109605],
+            ['RU-CU', 5.550958],
+            ['RU-TOM', -2.7347252],
+            ['RU-MAG', -6.6942225],
+            ['RU-KIR', 3.1769862],
+            ['RU-KR', 1.6222118],
+            ['RU-OMS', 0.74821985],
+            ['RU-SMO', 6.0676713],
+            ['RU-VGG', 9.87411],
+            ['RU-ROS', 11.7356205],
+            ['RU-TA', 5.4300437],
+            ['RU-KAM', 0.6591099],
+            ['RU-NGR', 5.310411],
+            ['RU-VOR', 8.639174],
+            ['RU-PNZ', 6.8813696],
+            ['RU-BA', 4.024732],
+            ['RU-ULY', 5.6876683],
+            ['RU-PSK', 5.4319167],
+            ['RU-AMU', -1.760116],
+            ['RU-NVS', -0.37634692],
+            ['RU-KHM', -2.5828803],
+            ['RU-CHU', -7.6485124],
+            ['RU-SE', 11.497256],
+            ['RU-BU', -2.5572927],
+            ['RU-KYA', -4.054674],
+            ['RU-KLU', 6.4690437],
+            ['RU-ZAB', -4.1820993],
+            ['RU-NIZ', 5.2263937],
+            ['RU-CHE', 2.6638372],
+            ['RU-STA', 11.531506],
+            ['RU-TAM', 7.443285],
+            ['RU-MO', 6.4679475],
+            ['RU-ME', 4.562465],
+            ['RU-TVE', 4.9263024],
+            ['RU-KHA', -3.2654457],
+            ['RU-PRI', 4.2885637],
+            ['RU-KDA', 14.896443],
+            ['RU-ALT', 1.3183553],
+            ['RU-BRY', 7.4531507],
+            ['RU-TUL', 6.879175],
+            ['RU-KOS', 3.8064394],
+            ['RU-TYU', 0.7056618],
+            ['RU-MOS', 6.1597333],
+            ['RU-KGN', 2.1346586],
+            ['RU-LIP', 7.894796],
+            ['RU-LEN', 4.5403647],
+            ['RU-NEN', -3.656987],
+            ['RU-RYA', 6.2876754],
+            ['RU-TY', -2.7202733],
+            ['RU-AST', 12.223289],
+            ['RU-DA', 11.726301],
+            ['RU-KGD', 7.163655],
+            ['RU-BEL', 7.8523264],
+            ['RU-YEV', 1.6838355],
+            ['RU-YAR', 4.77301],
+            ['RU-KRS', 8.32822],
+            ['RU-UD', 3.5588286],
+            ['RU-VLG', 2.819544]
+        ];
+
+        var data = google.visualization.arrayToDataTable(array);
+
+
+        var options = {
+            region:'RU',
+            resolution:'provinces',
+            colorAxis: {
+                minValue: -15,
+                maxValue: 15
+            }
+        };
+
+        var chart = new google.visualization.GeoChart(document.getElementById('map'));
+
+
+
+
+
+
+        function selectHandler() {
+            var selectedItem = chart.getSelection();
+            if (selectedItem){
+                //TODO: title
+                window.location = '/BlazegraphWeather/graphicByYears.html?id=' + array[selectedItem[0].row+1][1] + '&title=' + ""+"&type=region";
+
+            }
+
+        }
+
+        google.visualization.events.addListener(chart, 'select', selectHandler);
+        chart.draw(data, options);
+
+    }
+</script>
+
+</body>
+</html>
