@@ -91,10 +91,16 @@ body {
     width: 900px;
 }
 
-#map, #datePickerContainer, #graphicContainer {
+#map, #datePickerContainer, #graphicContainer, #tableContainer {
     /*border: 1px black solid;*/
     height: 100%;
     width: 100%;
+}
+
+#resultsTable{
+    border: 1px black solid;
+    height:30px;
+    width:400px;
 }
 
 .red {

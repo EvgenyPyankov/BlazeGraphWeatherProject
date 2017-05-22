@@ -19,6 +19,13 @@ function submit() {
     alert(regionsMap[region]);
     alert(region);
 }
+function printTable(arg) {
+    var output = '';
+
+    output += '<table id="resultsTable"><tr><td>Mean from</td><td>Mean to</td><td>Delta</td></tr></tr><tr><td>'  + arg.from + '</td><td>' + arg.to+ '</td><td>' + arg.avg+ '</td></tr></table>';
+
+    return output;
+}
 
 function calculate(data) {
 
@@ -37,6 +44,7 @@ function calculate(data) {
             alert(json.from);
             alert(json.to);
             alert(json.avg);
+            $('#tableContainer').append(printTable(json));
             // var arr = [['Month', 'Temperature']];
             //
             //

@@ -194,21 +194,24 @@
         <form id='yearPicker'>
             Choose period from:
             </br>
-            <input type='number' id='fromFrom' min='1880' max='2016'>
+            <input type='number' id='fromFrom' min='1880' max='2016' value='1975'>
             -
-            <input type='number' id='fromTo' min='1880' max='2016'>
+            <input type='number' id='fromTo' min='1880' max='2016' value='1976'>
             </br>
         <h2>To:</h2>
         </br>
             Choose period to:
             </br>
-        <input type='number' id='toFrom' min='1880' max='2016'>
+        <input type='number' id='toFrom' min='1880' max='2016' value='2005'>
         -
-        <input type='number' id='toTo' min='1880' max='2016'>
+        <input type='number' id='toTo' min='1880' max='2016' value='2006'>
         </br>
 
         </form>
         <button onclick='submit()'>Submit</button>
+        <div id="tableContainer">
+            <div id="loadingDiv" style="display: none"></div>
+        </div>
     </div>
     <div class="clear">
     </div>
